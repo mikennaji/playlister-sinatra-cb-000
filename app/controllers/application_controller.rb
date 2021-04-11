@@ -11,7 +11,7 @@ class ApplicationController < Sinatra::Base
     erb :'/songs/new'
   end
 
-  post '/new_songs' do
+  post '/songs' do
      @artist = Artist.find_or_create_by(name: params["Artist Name"])
    @song = Song.create(name: params[:Name])
    @song.artist = @artist
