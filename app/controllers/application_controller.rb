@@ -22,15 +22,10 @@ class ApplicationController < Sinatra::Base
 
 
   end
-  params[:genres].each do |genre|
-  @genre = Genre.find_by(name: genre)
-    if @genre
-      SongGenre.create(song: @song, genre: @genre)
-    else
-      @genre = Genre.create(name: genre)
-     SongGenre.create(song: @song, genre: @genre)
-   end
- end
+    params[:genres].each do |genre|
+              @song.genres.push(Genre.find(genre))
+          end
+
  @song.save
  redirect to "/songs/#{@song.slug}"
  end
