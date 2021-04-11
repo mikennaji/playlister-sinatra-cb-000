@@ -15,9 +15,7 @@ class ApplicationController < Sinatra::Base
      @artist = Artist.find_or_create_by(name: params["Artist Name"])
    @song = Song.create(name: params[:Name])
    @song.artist = @artist
-    params[:genres].each do |genre|
-              @song.genres.push(Genre.find(genre))
-          end
+  @song.genre_ids = params[:genres]
 
  @song.save
  redirect to "/songs/#{@song.slug}"
