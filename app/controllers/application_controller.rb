@@ -12,16 +12,9 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/new_songs' do
+     @artist = Artist.find_or_create_by(name: params["Artist Name"])
    @song = Song.create(name: params[:Name])
-   @artist = Artist.find_by(name: params["Artist Name"])
-   if @artist
-     @song.artist = @artist
-   else
-     @aritst = Artist.create(name: params["Artist Name"])
-
-
-
-  end
+   @song.artist = @artist
     params[:genres].each do |genre|
               @song.genres.push(Genre.find(genre))
           end
@@ -31,7 +24,7 @@ class ApplicationController < Sinatra::Base
  end
 
  get '/songs/:slug' do
-   @song = Song.slug(params[:slug])
+   @song = Song.find_by_slug(params[:slug])
    erb :'/songs/show'
  end
 
